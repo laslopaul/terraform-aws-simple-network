@@ -9,10 +9,6 @@ locals {
 
 resource "aws_vpc" "default" {
   cidr_block = var.vpc_cidr
-
-  tags = {
-    environment = var.environment
-  }
 }
 
 resource "aws_subnet" "subnets" {
@@ -20,8 +16,4 @@ resource "aws_subnet" "subnets" {
   for_each          = local.subnet_cidrs
   cidr_block        = each.value
   availability_zone = endswith(each.key, "0") ? data.aws_availability_zones.available.names[0] : data.aws_availability_zones.available.names[1]
-
-  tags = {
-    environment = var.environment
-  }
 }
