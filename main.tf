@@ -7,8 +7,8 @@ terraform {
   }
 }
 
-module "aws-simple-network" {
-  source      = "./modules/aws-simple-network"
+module "aws-three-tier-network" {
+  source      = "./modules/aws-three-tier-network"
   vpc_cidr    = "10.0.0.0/16"
   region      = "eu-west-2"
   environment = "staging"
@@ -16,5 +16,5 @@ module "aws-simple-network" {
 
 output "vpc_id" {
   description = "VPC identifier"
-  value       = module.aws-simple-network.vpc_id
+  value       = module.aws-three-tier-network.vpc_id
 }
