@@ -13,8 +13,3 @@ module "aws-three-tier-network" {
   region      = "eu-west-2"
   environment = "staging"
 }
-
-output "vpc_id" {
-  description = "VPC identifier"
-  value       = module.aws-three-tier-network.vpc_id
-}
