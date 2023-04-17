@@ -8,26 +8,26 @@ locals {
     data.aws_availability_zones.available.names[1]
   ]
 
-  subnet_tiers = ["web", "app", "db"]
-
   # Number of subnets per each tier
   subnets_per_tier = length(local.az_names)
-
   # Assign /24 CIDR block for each subnet
-  subnet_cidrs = zipmap(
-    local.subnet_tiers,
-    chunklist(cidrsubnets(var.vpc_cidr, 8, 8, 8, 8, 8, 8), 2)
-  )
+  all_cidrs = cidrsubnets(var.vpc_cidr, 8, 8, 8, 8, 8, 8)
+  # Total number of subnets
+  total_subnets = length(local.all_cidrs)
+  # List of CIDR ranges for public networks
+  public_cidrs = slice(local.all_cidrs, 0, local.subnets_per_tier)
+  # List of CIDR ranges for private networks
+  private_cidrs = slice(local.all_cidrs, local.subnets_per_tier, local.total_subnets)
 }
 
 resource "aws_vpc" "default" {
   cidr_block = var.vpc_cidr
 }
 
-resource "aws_subnet" "web" {
+resource "aws_subnet" "public" {
   count             = local.subnets_per_tier
   vpc_id            = aws_vpc.default.id
-  cidr_block        = local.subnet_cidrs["web"][count.index]
+  cidr_block        = local.public_cidrs[count.index]
   availability_zone = local.az_names[count.index]
 
   tags = {
@@ -37,28 +37,15 @@ resource "aws_subnet" "web" {
   }
 }
 
-resource "aws_subnet" "app" {
-  count             = local.subnets_per_tier
+resource "aws_subnet" "private" {
+  count             = length(local.private_cidrs)
   vpc_id            = aws_vpc.default.id
-  cidr_block        = local.subnet_cidrs["app"][count.index]
-  availability_zone = local.az_names[count.index]
+  cidr_block        = local.private_cidrs[count.index]
+  availability_zone = local.az_names[count.index % local.subnets_per_tier]
 
   tags = {
-    tier  = "app"
+    tier  = count.index < local.subnets_per_tier ? "app" : "db"
     scope = "private"
-    az    = local.az_names[count.index]
-  }
-}
-
-resource "aws_subnet" "db" {
-  count             = local.subnets_per_tier
-  vpc_id            = aws_vpc.default.id
-  cidr_block        = local.subnet_cidrs["db"][count.index]
-  availability_zone = local.az_names[count.index]
-
-  tags = {
-    tier  = "db"
-    scope = "private"
-    az    = local.az_names[count.index]
+    az    = local.az_names[count.index % local.subnets_per_tier]
   }
 }
