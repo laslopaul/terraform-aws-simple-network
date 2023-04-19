@@ -10,6 +10,7 @@ resource "aws_route_table" "private" {
 
   tags = {
     scope = "private"
+    az    = local.az_names[count.index]
   }
 }
 
