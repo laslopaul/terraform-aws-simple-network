@@ -7,14 +7,10 @@ terraform {
   }
 }
 
-module "aws-simple-network" {
-  source      = "./modules/aws-simple-network"
-  vpc_cidr    = "10.0.0.0/16"
-  region      = "eu-west-2"
-  environment = "staging"
-}
-
-output "vpc_id" {
-  description = "VPC identifier"
-  value       = module.aws-simple-network.vpc_id
+module "aws-three-tier-network" {
+  source              = "./modules/aws-three-tier-network"
+  vpc_cidr            = "10.0.0.0/16"
+  region              = "eu-west-2"
+  bastion_access_cidr = "0.0.0.0/0"
+  environment         = "staging"
 }
