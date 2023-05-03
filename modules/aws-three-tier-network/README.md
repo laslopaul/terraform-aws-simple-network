@@ -1,4 +1,4 @@
-# terraform-aws-three-tier-network
+# aws-three-tier-network
 
 This Terraform module creates AWS virtual private cloud (VPC) with three-tier network resources distributed between 2 availability zones (AZ) in a region defined by AWS `provider` block. The names of the availability zones are determined using `aws-availability-zones` data source.
 
