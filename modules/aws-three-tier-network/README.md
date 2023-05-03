@@ -1,6 +1,6 @@
-# terraform-aws-three-tier-network
+# aws-three-tier-network
 
-This Terraform module creates AWS virtual private cloud (VPC) with three-tier network resources distributed between 2 availability zones (AZ) in a region defined by `region` input variable. The names of the availability zones are determined using `aws-availability-zones` data source.
+This Terraform module creates AWS virtual private cloud (VPC) with three-tier network resources distributed between 2 availability zones (AZ) in a region defined by AWS `provider` block. The names of the availability zones are determined using `aws-availability-zones` data source.
 
 ## List of resources created in the VPC
 
@@ -27,7 +27,7 @@ In addition to the above-mentioned resources, the module creates the following s
 
 ## Resource tags
 
-In addition to `environment` default tag, which is applied to all resources, some resources that are named automatically by AWS, have the following tags:
+Some resources that are named automatically by AWS, have the following tags:
 
 - `tier` - defines tier of a resource (possible values: `web`, `app` or `db`). This tag is applied to subnets.
 - `scope` - can be `public` or `private`. This tag is applied to subnets and route tables.
@@ -37,13 +37,12 @@ In addition to `environment` default tag, which is applied to all resources, som
 ## Module inputs
 
 - `vpc_cidr` (string) - IP address range of the VPC (e.g. `10.0.0.0/16`). This value is used by `cidrsubnets` function to allocate IP address ranges for the subnets. For the given example, the function will create six /24 blocks.
-- `region` (string) - region of the VPC (e.g. `eu-west-2`)
 - `bastion_access_cidr` (string) - external IP address range that has access to Bastion host
-- `environment` (string) - value for `environment` tag, which will be applied to all created resources (e.g. `prod`)
 
 ## Module outputs
 
 - `vpc_id` (string) - identifier of the created VPC
+- `azs` (list(string)) - list of availability zones of the VPC
 - `subnets_web_tier` (list(string)) - list of web-tier subnet ids
 - `subnets_app_tier` (list(string)) - list of app-tier subnet ids
 - `subnets_db_tier` (list(string)) - list of database-tier subnet ids
