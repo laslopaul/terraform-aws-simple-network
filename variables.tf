@@ -1,7 +1,7 @@
 variable "region" {
   description = "Region of the VPC"
   type        = string
-  default     = "eu-west-2"
+  default     = "us-west-2"
 }
 
 variable "environment" {
