@@ -12,6 +12,7 @@ resource "aws_db_subnet_group" "main" {
 }
 
 resource "aws_db_instance" "main" {
+  availability_zone       = var.azs[0]
   identifier              = local.db_instance_name
   db_name                 = var.db_name
   instance_class          = var.db_instance_class
@@ -25,9 +26,11 @@ resource "aws_db_instance" "main" {
   publicly_accessible     = local.publicly_accessible
   skip_final_snapshot     = local.skip_final_snapshot
   backup_retention_period = var.backup_retention_period
+
 }
 
-resource "aws_db_instance" "main_replica" {
+resource "aws_db_instance" "replica" {
+  availability_zone      = var.azs[1]
   identifier             = "${local.db_instance_name}-replica"
   replicate_source_db    = aws_db_instance.main.identifier
   instance_class         = var.db_instance_class

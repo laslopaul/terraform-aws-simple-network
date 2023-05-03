@@ -32,4 +32,5 @@ module "aws-three-tier-db" {
   backup_retention_period = 1
   db_subnets              = module.aws-three-tier-network.subnets_db_tier
   db_security_group       = module.aws-three-tier-network.sg_db_tier
+  azs                     = module.aws-three-tier-network.azs
 }
