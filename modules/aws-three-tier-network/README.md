@@ -42,6 +42,7 @@ Some resources that are named automatically by AWS, have the following tags:
 ## Module outputs
 
 - `vpc_id` (string) - identifier of the created VPC
+- `azs` (list(string)) - list of availability zones of the VPC
 - `subnets_web_tier` (list(string)) - list of web-tier subnet ids
 - `subnets_app_tier` (list(string)) - list of app-tier subnet ids
 - `subnets_db_tier` (list(string)) - list of database-tier subnet ids

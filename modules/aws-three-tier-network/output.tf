@@ -3,6 +3,11 @@ output "vpc_id" {
   value       = aws_vpc.default.id
 }
 
+output "azs" {
+  description = "List of availability zones of the VPC"
+  value       = local.az_names
+}
+
 output "subnets_web_tier" {
   description = "List of web-tier subnet ids"
   value       = [for s in aws_subnet.public : s.id]
