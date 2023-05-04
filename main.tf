@@ -34,3 +34,12 @@ module "aws-three-tier-db" {
   db_security_group       = module.aws-three-tier-network.sg_db_tier
   azs                     = module.aws-three-tier-network.azs
 }
+
+module "aws-three-tier-compute" {
+  source                  = "./modules/aws-three-tier-compute"
+  ubuntu_version          = "22.04"
+  ssh_public_key          = file("./ssh/bastion.pub")
+  bastion_instance_type   = "t3.micro"
+  subnets_web_tier        = module.aws-three-tier-network.subnets_web_tier
+  sg_bastion              = module.aws-three-tier-network.sg_bastion
+}
