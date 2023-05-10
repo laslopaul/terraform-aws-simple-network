@@ -18,9 +18,9 @@ In addition to the above-mentioned resources, the module creates the following s
 
 1. `sg_bastion` - allows inbound SSH traffic to Bastion host from IP address range defined in `bastion_access_cidr` input variable
 2. `sg_external_lb` - allows inbound HTTP traffic to internet-facing load balancer
-3. `sg_internal_lb` - allows HTTP inbound traffic from internet-facing to external load balancer
-4. `sg_web_tier` - allows SSH inbound traffic from Bastion host, and HTTP inbound traffic from internal load balancer (for web-tier subnets)
-5. `sg_app_tier` - allows HTTP inbound traffic from web-tier subnets, and SSH inbound traffic from Bastion host
+3. `sg_internal_lb` - allows HTTP inbound traffic from web-tier nodes to internal load balancer
+4. `sg_web_tier` - allows SSH inbound traffic from Bastion host, and HTTP inbound traffic from internet-facing load balancer (for web-tier subnets)
+5. `sg_app_tier` - allows HTTP inbound traffic from internal load balancer, and SSH inbound traffic from Bastion host
 6. `sg_db_tier` - allows MySQL inbound traffic (port 3306) from app-tier subnets
 
 **Note:** All security groups contain an egress rule allowing all outbound connections.

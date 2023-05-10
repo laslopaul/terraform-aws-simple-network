@@ -41,8 +41,35 @@ resource "aws_security_group" "sg_external_lb" {
 
 resource "aws_security_group" "sg_internal_lb" {
   name        = "sg_internal_lb"
-  description = "Allow HTTP inbound traffic from internet-facing load balancer"
+  description = "Allow HTTP inbound traffic from web-tier nodes to internal load balancer"
   vpc_id      = aws_vpc.default.id
+
+  ingress {
+    from_port       = 80
+    to_port         = 80
+    protocol        = "tcp"
+    security_groups = [aws_security_group.sg_web_tier.id]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group" "sg_web_tier" {
+  name        = "sg_web_tier"
+  description = "Allow SSH inbound traffic from Bastion, and HTTP inbound traffic from external load balancer"
+  vpc_id      = aws_vpc.default.id
+
+  ingress {
+    from_port       = 22
+    to_port         = 22
+    protocol        = "tcp"
+    security_groups = [aws_security_group.sg_bastion.id]
+  }
 
   ingress {
     from_port       = 80
@@ -59,43 +86,16 @@ resource "aws_security_group" "sg_internal_lb" {
   }
 }
 
-resource "aws_security_group" "sg_web_tier" {
-  name        = "sg_web_tier"
-  description = "Allow SSH inbound traffic from Bastion, and HTTP inbound traffic from internal load balancer"
+resource "aws_security_group" "sg_app_tier" {
+  name        = "sg_app_tier"
   vpc_id      = aws_vpc.default.id
-
-  ingress {
-    from_port       = 22
-    to_port         = 22
-    protocol        = "tcp"
-    security_groups = [aws_security_group.sg_bastion.id]
-  }
+  description = "Allow HTTP inbound traffic from internal load balancer, and SSH inbound traffic from Bastion"
 
   ingress {
     from_port       = 80
     to_port         = 80
     protocol        = "tcp"
     security_groups = [aws_security_group.sg_internal_lb.id]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
-
-resource "aws_security_group" "sg_app_tier" {
-  name        = "sg_app_tier"
-  vpc_id      = aws_vpc.default.id
-  description = "Allow HTTP inbound traffic from Web tier, and SSH inbound traffic from Bastion"
-
-  ingress {
-    from_port       = 80
-    to_port         = 80
-    protocol        = "tcp"
-    security_groups = [aws_security_group.sg_web_tier.id]
   }
 
   ingress {
