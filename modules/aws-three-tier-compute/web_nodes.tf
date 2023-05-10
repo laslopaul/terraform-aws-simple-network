@@ -13,7 +13,7 @@ resource "aws_launch_template" "web_nodes" {
     resource_type = "instance"
 
     tags = {
-      Name = "web_node_${substr(uuid(), 0, 3)}"
+      Name = "web_node"
       tier = "web"
     }
   }
