@@ -65,4 +65,11 @@ module "aws-three-tier-loadbalancer" {
   external_lb_listener_port     = 80
   external_lb_sg                = module.aws-three-tier-network.sg_external_lb
   external_lb_subnets           = module.aws-three-tier-network.subnets_web_tier
+  app_nodes_asg                 = module.aws-three-tier-compute.app_nodes_asg
+  internal_lb_tg_protocol       = "HTTP"
+  internal_lb_tg_port           = 80
+  internal_lb_listener_protocol = "HTTP"
+  internal_lb_listener_port     = 80
+  internal_lb_sg                = module.aws-three-tier-network.sg_internal_lb
+  internal_lb_subnets           = module.aws-three-tier-network.subnets_app_tier
 }
