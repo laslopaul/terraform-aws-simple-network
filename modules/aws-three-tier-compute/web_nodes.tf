@@ -5,7 +5,7 @@ resource "aws_launch_template" "web_nodes" {
   key_name      = aws_key_pair.bastion_ssh_key.key_name
 
   network_interfaces {
-    associate_public_ip_address = false
+    associate_public_ip_address = true
     security_groups             = [var.sg_web_tier]
   }
 
