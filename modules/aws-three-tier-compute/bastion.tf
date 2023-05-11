@@ -9,14 +9,14 @@ resource "aws_instance" "bastion" {
   iam_instance_profile        = aws_iam_instance_profile.bastion_profile.name
 
   provisioner "file" {
-    source      = "${path.root}/ssh"
-    destination = "~/.ssh"
+    source      = "${path.root}/.ssh"
+    destination = "/home/ubuntu"
 
     connection {
       type        = "ssh"
       host        = self.public_ip
       user        = "ubuntu"
-      private_key = file("${path.root}/ssh/bastion")
+      private_key = file("${path.root}/.ssh/bastion")
     }
   }
 

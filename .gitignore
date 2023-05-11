@@ -29,4 +29,4 @@ override.tf.json
 # example: *tfplan*
 
 # Ignore Bastion host keys in ssh folder
-ssh/bastion*
+.ssh/bastion*
