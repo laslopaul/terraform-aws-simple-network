@@ -1,0 +1,5 @@
+Host *.compute.internal
+    User ubuntu
+    IdentityFile ~/.ssh/bastion
+    PreferredAuthentications publickey
+    IdentitiesOnly yes

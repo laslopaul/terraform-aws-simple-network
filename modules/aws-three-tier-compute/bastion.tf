@@ -8,6 +8,18 @@ resource "aws_instance" "bastion" {
   vpc_security_group_ids      = [var.sg_bastion]
   iam_instance_profile        = aws_iam_instance_profile.bastion_profile.name
 
+  provisioner "file" {
+    source      = "${path.root}/ssh"
+    destination = "~/.ssh"
+
+    connection {
+      type        = "ssh"
+      host        = self.public_ip
+      user        = "ubuntu"
+      private_key = file("${path.root}/ssh/bastion")
+    }
+  }
+
   tags = {
     Name = "bastion"
   }
