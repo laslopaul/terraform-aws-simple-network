@@ -24,6 +24,10 @@ resource "aws_vpc" "default" {
   cidr_block           = var.vpc_cidr
   enable_dns_support   = true
   enable_dns_hostnames = true
+
+  tags = {
+    Name = "three-tier-vpc"
+  }
 }
 
 resource "aws_subnet" "public" {
@@ -33,6 +37,7 @@ resource "aws_subnet" "public" {
   availability_zone = local.az_names[count.index]
 
   tags = {
+    Name  = "subnet-web-${local.az_names[count.index]}"
     tier  = "web"
     scope = "public"
     az    = local.az_names[count.index]
@@ -46,6 +51,7 @@ resource "aws_subnet" "private" {
   availability_zone = local.az_names[count.index % local.subnets_per_tier]
 
   tags = {
+    Name  = "subnet-${count.index < local.subnets_per_tier ? "app" : "db"}-${local.az_names[count.index % local.subnets_per_tier]}"
     tier  = count.index < local.subnets_per_tier ? "app" : "db"
     scope = "private"
     az    = local.az_names[count.index % local.subnets_per_tier]
