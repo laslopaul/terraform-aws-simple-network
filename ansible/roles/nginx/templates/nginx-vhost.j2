@@ -5,7 +5,7 @@ server {
     server_name {{ external_lb_endpoint }} www.{{ external_lb_endpoint }};
     
     location / {
-        proxy_pass {{ internal_lb_endpoint }};
+        proxy_pass http://{{ internal_lb_endpoint }};
 
         proxy_set_header Host $http_host;
         proxy_set_header X-Real-IP $remote_addr;
