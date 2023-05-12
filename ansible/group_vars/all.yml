@@ -1,0 +1,4 @@
+---
+# Variables for Nginx reverse proxy
+external_lb_endpoint: ""
+internal_lb_endpoint: ""

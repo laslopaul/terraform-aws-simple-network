@@ -1,0 +1,14 @@
+---
+- name: Install Nginx reverse proxy
+  hosts: nodes_web
+  roles:
+    - role: nginx
+      target: rproxy
+  tags: nginx-rproxy
+
+- name: Install Nginx web server
+  hosts: nodes_app
+  roles:
+    - role: nginx
+      target: lemp
+  tags: nginx-webserver
