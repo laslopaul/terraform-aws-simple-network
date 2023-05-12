@@ -1,5 +1,5 @@
 ---
-- name: Install nginx webserver
+- name: Install nginx package
   become: true
   ansible.builtin.apt:
     update_cache: true

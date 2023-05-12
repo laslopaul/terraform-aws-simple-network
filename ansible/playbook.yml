@@ -4,6 +4,8 @@
   roles:
     - role: nginx
       target: rproxy
+      external_lb_endpoint: "{{ external_lb }}"
+      internal_lb_endpoint: "{{ internal_lb }}"
   tags: nginx-rproxy
 
 - name: Install Nginx web server
@@ -11,4 +13,5 @@
   roles:
     - role: nginx
       target: lemp
+      external_lb_endpoint: "{{ external_lb }}"
   tags: nginx-webserver
