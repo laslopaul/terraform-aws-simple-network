@@ -8,16 +8,26 @@ resource "aws_instance" "bastion" {
   vpc_security_group_ids      = [var.sg_bastion]
   iam_instance_profile        = aws_iam_instance_profile.bastion_profile.name
 
+  connection {
+    type        = "ssh"
+    host        = self.public_ip
+    user        = "ubuntu"
+    private_key = file("${path.root}/.ssh/bastion")
+  }
+
   provisioner "file" {
     source      = "${path.root}/.ssh"
     destination = "/home/ubuntu"
+  }
 
-    connection {
-      type        = "ssh"
-      host        = self.public_ip
-      user        = "ubuntu"
-      private_key = file("${path.root}/.ssh/bastion")
-    }
+  provisioner "remote-exec" {
+    inline = [
+      "git clone --depth 1 --branch stage6 --no-checkout https://github.com/laslopaul/terraform-aws-three-tier-arch.git",
+      "cd terraform-aws*",
+      "git sparse-checkout set ansible",
+      "git checkout stage6",
+      "chmod 600 ~/.ssh/bastion"
+    ]
   }
 
   tags = {
