@@ -1,0 +1,28 @@
+---
+- name: Install Nginx reverse proxy
+  hosts: nodes_web
+  roles:
+    - role: nginx
+      target: rproxy
+      external_lb_endpoint: "{{ external_lb }}"
+      internal_lb_endpoint: "{{ internal_lb }}"
+  tags: rproxy
+
+- name: Install Nginx web server
+  hosts: nodes_app
+  roles:
+    - role: nginx
+      target: lemp
+      external_lb_endpoint: "{{ external_lb }}"
+  tags: webserver
+
+- name: Install Wordpress
+  hosts: nodes_app
+  roles:
+    - role: wordpress
+      wp_host: "{{ external_lb }}"
+      db_host: "{{ sql_host }}"
+      db_name: "{{ sql_dbname }}"
+      db_user: "{{ sql_user }}"
+      db_password: "{{ sql_password }}"
+  tags: wordpress

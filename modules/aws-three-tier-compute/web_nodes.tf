@@ -5,7 +5,7 @@ resource "aws_launch_template" "web_nodes" {
   key_name      = aws_key_pair.bastion_ssh_key.key_name
 
   network_interfaces {
-    associate_public_ip_address = false
+    associate_public_ip_address = true
     security_groups             = [var.sg_web_tier]
   }
 
@@ -29,5 +29,9 @@ resource "aws_autoscaling_group" "web_nodes" {
   launch_template {
     id      = aws_launch_template.web_nodes.id
     version = "$Latest"
+  }
+
+  lifecycle {
+    ignore_changes = [load_balancers, target_group_arns]
   }
 }

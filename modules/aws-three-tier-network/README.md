@@ -27,7 +27,7 @@ In addition to the above-mentioned resources, the module creates the following s
 
 ## Resource tags
 
-Some resources that are named automatically by AWS, have the following tags:
+Some resources have the following tags:
 
 - `tier` - defines tier of a resource (possible values: `web`, `app` or `db`). This tag is applied to subnets.
 - `scope` - can be `public` or `private`. This tag is applied to subnets and route tables.

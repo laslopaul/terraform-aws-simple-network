@@ -1,0 +1,21 @@
+---
+dependencies: []
+
+galaxy_info:
+  role_name: nginx
+  author: laslopaul
+  description: Nginx installation for Ubuntu
+  license: "license (BSD, MIT)"
+  min_ansible_version: "2.14"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - trusty
+        - xenial
+        - focal
+        - jammy
+  galaxy_tags:
+    - web
+    - nginx
+    - reverseproxy
+    - loadbalancer

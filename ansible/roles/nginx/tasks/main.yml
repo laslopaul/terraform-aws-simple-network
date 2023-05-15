@@ -1,0 +1,50 @@
+---
+- name: Install nginx package
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+    pkg: nginx
+
+- name: Ensure nginx config path exists
+  become: true
+  ansible.builtin.file:
+    path: /etc/nginx
+    state: directory
+    mode: "0755"
+
+- name: Remove default nginx vhost config file
+  become: true
+  ansible.builtin.file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  notify: Restart nginx
+
+- name: Add vhost config file
+  become: true
+  ansible.builtin.template:
+    src: nginx-vhost.j2
+    dest: "/etc/nginx/sites-available/{{ target }}.conf"
+    force: true
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Validate nginx conf
+
+- name: Create nginx document root
+  become: true
+  ansible.builtin.file:
+    path: "/var/www/{{ external_lb_endpoint }}"
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: "0755"
+  when: target == "lemp"
+
+- name: Enable vhost config file
+  become: true
+  ansible.builtin.file:
+    src: "/etc/nginx/sites-available/{{ target }}.conf"
+    dest: "/etc/nginx/sites-enabled/{{ target }}.conf"
+    state: link
+  notify: Reload nginx

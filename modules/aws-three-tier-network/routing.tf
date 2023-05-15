@@ -9,6 +9,7 @@ resource "aws_route_table" "private" {
   }
 
   tags = {
+    Name  = "rt-priv-${local.az_names[count.index]}"
     scope = "private"
     az    = local.az_names[count.index]
   }
@@ -29,6 +30,7 @@ resource "aws_route_table" "public" {
   }
 
   tags = {
+    Name  = "rt-publ"
     scope = "public"
   }
 }

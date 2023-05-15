@@ -1,0 +1,8 @@
+---
+plugin: aws_ec2
+exclude_filters:
+  - tag:Name:
+      - "bastion"
+keyed_groups:
+  - key: tags['tier']
+    prefix: nodes

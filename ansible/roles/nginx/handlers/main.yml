@@ -1,0 +1,17 @@
+---
+- name: Restart nginx
+  become: true
+  ansible.builtin.service:
+    name: nginx
+    state: restarted
+
+- name: Validate nginx conf
+  become: true
+  ansible.builtin.command: nginx -t
+  changed_when: false
+
+- name: Reload nginx
+  become: true
+  ansible.builtin.service:
+    name: nginx
+    state: reloaded
