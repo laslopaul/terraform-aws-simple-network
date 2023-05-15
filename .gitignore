@@ -30,3 +30,6 @@ override.tf.json
 
 # Ignore Bastion host keys in ssh folder
 .ssh/bastion*
+
+# Ignore Ansible log files
+ansible/ansible-playbook*.log
