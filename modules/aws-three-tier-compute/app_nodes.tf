@@ -30,4 +30,8 @@ resource "aws_autoscaling_group" "app_nodes" {
     id      = aws_launch_template.app_nodes.id
     version = "$Latest"
   }
+
+  lifecycle {
+    ignore_changes = [load_balancers, target_group_arns]
+  }
 }
