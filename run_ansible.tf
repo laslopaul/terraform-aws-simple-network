@@ -27,9 +27,10 @@ resource "null_resource" "run_ansible" {
       ansible-playbook \
         -e external_lb=${local.external_lb} \
         -e internal_lb=${local.internal_lb} \
-        -e db_host=${local.db_host} \
-        -e db_user=${local.db_user} \
-        -e db_password=${local.db_password} playbook.yml
+        -e sql_host=${local.db_host} \
+        -e sql_dbname=wordpress \
+        -e sql_user=${local.db_user} \
+        -e sql_password=${local.db_password} playbook.yml
       EOT
     ]
   }

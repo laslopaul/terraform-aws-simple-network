@@ -4,7 +4,7 @@ external_lb: ""
 internal_lb: ""
 
 # Variables for Wordpress connection to the database
-db_host: ""
-db_name: ""
-db_user: ""
-db_password: ""
+sql_host: ""
+sql_dbname: ""
+sql_user: ""
+sql_password: ""

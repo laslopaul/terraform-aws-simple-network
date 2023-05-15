@@ -21,8 +21,8 @@
   roles:
     - role: wordpress
       wp_host: "{{ external_lb }}"
-      db_host: "{{ db_host }}"
-      db_name: "{{ db_name }}"
-      db_user: "{{ db_user }}"
-      db_password: "{{ db_password }}"
+      db_host: "{{ sql_host }}"
+      db_name: "{{ sql_dbname }}"
+      db_user: "{{ sql_user }}"
+      db_password: "{{ sql_password }}"
   tags: wordpress
