@@ -22,10 +22,10 @@ resource "aws_instance" "bastion" {
 
   provisioner "remote-exec" {
     inline = [
-      "git clone --depth 1 --branch stage6 --no-checkout https://github.com/laslopaul/terraform-aws-three-tier-arch.git",
+      "git clone --depth 1 --branch master --no-checkout https://github.com/laslopaul/terraform-aws-three-tier-arch.git",
       "cd terraform-aws*",
       "git sparse-checkout set ansible",
-      "git checkout stage6",
+      "git checkout master",
       "chmod 600 ~/.ssh/bastion"
     ]
   }
