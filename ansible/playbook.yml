@@ -6,7 +6,7 @@
       target: rproxy
       external_lb_endpoint: "{{ external_lb }}"
       internal_lb_endpoint: "{{ internal_lb }}"
-  tags: nginx-rproxy
+  tags: rproxy
 
 - name: Install Nginx web server
   hosts: nodes_app
@@ -14,4 +14,15 @@
     - role: nginx
       target: lemp
       external_lb_endpoint: "{{ external_lb }}"
-  tags: nginx-webserver
+  tags: webserver
+
+- name: Install Wordpress
+  hosts: nodes_app
+  roles:
+    - role: wordpress
+      wp_host: "{{ external_lb }}"
+      db_host: "{{ db_host }}"
+      db_name: "{{ db_name }}"
+      db_user: "{{ db_user }}"
+      db_password: "{{ db_password }}"
+  tags: wordpress
