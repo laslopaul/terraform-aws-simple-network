@@ -11,6 +11,12 @@ resource "aws_lb_target_group" "external_lb_tg" {
   port     = var.external_lb_tg_port
   vpc_id   = var.vpc_id
 
+  stickiness {
+    enabled         = true
+    type            = "lb_cookie"
+    cookie_duration = 86400
+  }
+
   lifecycle {
     ignore_changes        = [name]
     create_before_destroy = true
