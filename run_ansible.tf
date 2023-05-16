@@ -26,12 +26,13 @@ resource "null_resource" "run_ansible" {
       <<-EOT
       ANSIBLE_LOG_PATH=$PWD/ansible_${formatdate("YYYY-MM-DD_hhmmss", timestamp())}.log \
       ansible-playbook \
-        -e external_lb=${local.external_lb} \
-        -e internal_lb=${local.internal_lb} \
-        -e sql_host=${local.db_host} \
-        -e sql_dbname=wordpress \
-        -e sql_user=${local.db_user} \
-        -e sql_password=${local.db_password} playbook.yml
+        -e external_lb_endpoint=${local.external_lb} \
+        -e internal_lb_endpoint=${local.internal_lb} \
+        -e recreate_wp_config=false \
+        -e db_host=${local.db_host} \
+        -e db_name=wordpress \
+        -e db_user=${local.db_user} \
+        -e db_password=${local.db_password} playbook.yml
       EOT
     ]
   }

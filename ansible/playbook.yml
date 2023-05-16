@@ -1,11 +1,12 @@
 ---
+# NOTE: All role variables, which are not mentioned in this playbook,
+# are defined in Terraform `run_ansible` resource
+
 - name: Install Nginx reverse proxy
   hosts: nodes_web
   roles:
     - role: nginx
       target: rproxy
-      external_lb_endpoint: "{{ external_lb }}"
-      internal_lb_endpoint: "{{ internal_lb }}"
   tags: rproxy
 
 - name: Install Nginx web server
@@ -13,16 +14,11 @@
   roles:
     - role: nginx
       target: lemp
-      external_lb_endpoint: "{{ external_lb }}"
   tags: webserver
 
 - name: Install Wordpress
   hosts: nodes_app
   roles:
     - role: wordpress
-      wp_host: "{{ external_lb }}"
-      db_host: "{{ sql_host }}"
-      db_name: "{{ sql_dbname }}"
-      db_user: "{{ sql_user }}"
-      db_password: "{{ sql_password }}"
+      wp_host: "{{ external_lb_endpoint }}"
   tags: wordpress
