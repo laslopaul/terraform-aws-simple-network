@@ -1,5 +1,6 @@
 ---
 wp_site: ""
+recreate_wp_config: false
 db_host: ""
 db_name: ""
 db_user: ""

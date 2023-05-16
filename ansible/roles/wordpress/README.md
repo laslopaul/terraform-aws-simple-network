@@ -8,7 +8,11 @@ This role requires Nginx web server and MySQL database to be pre-installed for c
 
 ## Role Variables
 
-- `wp_site` - web address of the Wordpress site. Used to name the virtual host folder in /var/www
+- `wp_site` - web address of the Wordpress site. Used to name the virtual host folder in /var/www.
+- `recreate_wp_config` (bool) - replace existing `wp-config.php` file with a new one generated from the template. Default is `false`.
+
+  **WARNING: Setting this variable to `true` will irreversibly change Wordpress secrets and salts, forcing all users to log in again.**
+
 - `db_host` - hostname of the database server.
 - `db_name` - name of the database for Wordpress.
 - `db_user` - database username.
