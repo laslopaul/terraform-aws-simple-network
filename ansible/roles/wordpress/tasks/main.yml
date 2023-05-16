@@ -31,6 +31,7 @@
     dest: "/var/www/{{ wp_host }}"
     owner: www-data
     group: www-data
+    creates: "/var/www/{{ wp_host }}/wordpress"
 
 - name: Remove wp-config-sample.php
   become: true
