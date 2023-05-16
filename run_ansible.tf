@@ -24,6 +24,7 @@ resource "null_resource" "run_ansible" {
       "cd ~/terraform-aws-three-tier-arch/ansible",
       "git pull",
       <<-EOT
+      ANSIBLE_LOG_PATH=$PWD/ansible_${formatdate("YYYY-MM-DD_hhmmss", timestamp())}.log \
       ansible-playbook \
         -e external_lb=${local.external_lb} \
         -e internal_lb=${local.internal_lb} \
