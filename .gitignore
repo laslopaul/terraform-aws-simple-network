@@ -32,4 +32,4 @@ override.tf.json
 .ssh/bastion*
 
 # Ignore Ansible log files
-ansible/ansible-playbook*.log
+ansible/*.log

@@ -31,6 +31,7 @@
     dest: "/var/www/{{ wp_host }}"
     owner: www-data
     group: www-data
+    creates: "/var/www/{{ wp_host }}/wordpress"
 
 - name: Remove wp-config-sample.php
   become: true
@@ -43,6 +44,7 @@
   ansible.builtin.template:
     src: wp-config.php.j2
     dest: "/var/www/{{ wp_host }}/wordpress/wp-config.php"
+    force: "{{ recreate_wp_config }}"
     mode: "0640"
     owner: www-data
     group: www-data
