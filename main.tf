@@ -77,3 +77,13 @@ module "aws-three-tier-loadbalancer" {
   internal_lb_sg                = module.aws-three-tier-network.sg_internal_lb
   internal_lb_subnets           = module.aws-three-tier-network.subnets_app_tier
 }
+
+module "aws-session-manager" {
+  source           = "./modules/aws-session-manager"
+  iam_policy_level = "group"
+  create_iam_group = false
+  iam_group_name   = "admins"
+
+  # Run after Compute module to obtain existing IAM role of EC2 instances
+  depends_on = [module.aws-three-tier-compute]
+}
