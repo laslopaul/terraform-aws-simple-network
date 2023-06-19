@@ -6,7 +6,7 @@
     pkg: "{{ item }}"
     state: present
   loop:
-    - php8.1-fpm
+    - php-fpm
     - php-mysql
     - php-curl
     - php-gd
