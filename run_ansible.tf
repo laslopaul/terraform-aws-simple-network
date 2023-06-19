@@ -15,7 +15,7 @@ resource "null_resource" "run_ansible" {
   connection {
     type        = "ssh"
     host        = local.bastion_ip
-    user        = "ubuntu"
+    user        = "ssm-user"
     private_key = file("./.ssh/bastion")
   }
 

@@ -11,13 +11,13 @@ resource "aws_instance" "bastion" {
   connection {
     type        = "ssh"
     host        = self.public_ip
-    user        = "ubuntu"
+    user        = "ssm-user"
     private_key = file("${path.root}/.ssh/bastion")
   }
 
   provisioner "file" {
     source      = "${path.root}/.ssh"
-    destination = "/home/ubuntu"
+    destination = "/home/ssm-user"
   }
 
   provisioner "remote-exec" {
