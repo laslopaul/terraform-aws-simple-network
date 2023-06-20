@@ -1,9 +1,8 @@
 name: "Three-tier App Workflow"
 
 on:
+  workflow_dispatch:
   push:
-    branches: ["master"]
-  pull_request:
 
 permissions:
   contents: read
