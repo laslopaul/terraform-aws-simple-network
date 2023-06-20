@@ -13,6 +13,14 @@ terraform {
       version = "~> 3.2"
     }
   }
+
+  cloud {
+    organization = "laslopaul"
+
+    workspaces {
+      name = "three-tier-app"
+    }
+  }
 }
 
 module "aws-three-tier-network" {
