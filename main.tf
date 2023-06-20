@@ -78,8 +78,8 @@ module "aws-three-tier-loadbalancer" {
   internal_lb_subnets           = module.aws-three-tier-network.subnets_app_tier
 }
 
-module "aws-session-manager" {
-  source           = "./modules/aws-session-manager"
+module "aws-systems-manager" {
+  source           = "./modules/aws-systems-manager"
   iam_policy_level = "group"
   create_iam_group = false
   iam_group_name   = "admins"
