@@ -4,6 +4,10 @@ resource "aws_launch_template" "web_nodes" {
   image_id      = data.aws_ami.ubuntu.id
   key_name      = aws_key_pair.bastion_ssh_key.key_name
 
+  iam_instance_profile {
+    name = data.aws_iam_instance_profile.ssm_managed_instance_profile.name
+  }
+
   network_interfaces {
     associate_public_ip_address = true
     security_groups             = [var.sg_web_tier]

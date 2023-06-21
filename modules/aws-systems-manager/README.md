@@ -6,7 +6,7 @@ Enable connectivity to EC2 instances via AWS Systems Manager (SSM).
 
 - IAM user or group that will have permissions to connect to the instances via AWS Systems Manager. Alternatively, the permissions can be granted to an existing user or group
 - Login profile with initial password for a created IAM user
-- IAM policy attachment to an existing EC2 role (imported from `aws-three-tier-compute` module). This policy allows AWS Systems Manager to perform actions on EC2 instances
+- IAM profile and role for EC2 instances managed by SSM
 - IAM policy that allows an associated user or group to connect to EC2 instances using the AWS CLI, the Amazon EC2 Console or the Session Manager console
 
 ## Module inputs

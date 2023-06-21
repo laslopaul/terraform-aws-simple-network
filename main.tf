@@ -65,6 +65,9 @@ module "aws-three-tier-compute" {
   app_tier_desired_capacity = 2
   subnets_app_tier          = module.aws-three-tier-network.subnets_app_tier
   sg_app_tier               = module.aws-three-tier-network.sg_app_tier
+
+  # Deploy after aws-systems-manager is required to fetch IAM profile of SSM managed instances
+  depends_on = [module.aws-systems-manager]
 }
 
 module "aws-three-tier-loadbalancer" {
