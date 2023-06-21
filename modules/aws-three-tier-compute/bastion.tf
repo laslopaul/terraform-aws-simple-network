@@ -96,7 +96,7 @@ data "aws_iam_policy_document" "allow_ssm_connection_to_ec2" {
     condition {
       test     = "BoolIfExists"
       variable = "ssm:SessionDocumentAccessCheck"
-      values   = ["true"]
+      values   = ["false"]
     }
   }
 
