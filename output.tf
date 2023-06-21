@@ -9,7 +9,7 @@ output "external_lb_endpoint" {
 }
 
 output "initial_iam_user_password" {
-  value       = module.aws-session-manager.initial_iam_user_password == [] ? null : module.aws-session-manager.initial_iam_user_password[0]
+  value       = module.aws-systems-manager.initial_iam_user_password == [] ? null : module.aws-systems-manager.initial_iam_user_password[0]
   description = "Initial password of created IAM user (encrypted)"
   sensitive   = false
 }
