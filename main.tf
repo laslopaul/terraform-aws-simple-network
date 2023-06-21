@@ -91,7 +91,4 @@ module "aws-systems-manager" {
   iam_policy_level = "group"
   create_iam_group = false
   iam_group_name   = "admins"
-
-  # Run after Compute module to obtain existing IAM role of EC2 instances
-  depends_on = [module.aws-three-tier-compute]
 }

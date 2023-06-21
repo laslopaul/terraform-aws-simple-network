@@ -4,7 +4,8 @@ This Terraform module creates compute resources as listed below for AWS three-ti
 
 ## List of created resources
 
-- Ubuntu Bastion host for access and deploy of software to Web and App nodes using Ansible. By default, Bastion host is created in the first Web-tier subnet.
+- Ubuntu Bastion host for access and deploy of software to Web and App nodes using Ansible. By default, Bastion host is created in the first Web-tier subnet
+- IAM profile for the Bastion host with an attached policy that allows Bastion to connect to EC2 instances
 - Autoscaling group of Ubuntu EC2 instances that is deployed in the Web-tier subnets
 - Autoscaling group of Ubuntu EC2 instances that is deployed in the App-tier subnets
 
