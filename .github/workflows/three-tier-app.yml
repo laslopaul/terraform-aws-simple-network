@@ -26,6 +26,11 @@ jobs:
       run:
         shell: bash
 
+    # Map non-secret Terraform outputs to a job output
+    outputs:
+      external_lb: ${{ steps.tf-output.outputs.EXTERNAL_LB }}
+      internal_lb: ${{ steps.tf-output.outputs.INTERNAL_LB }}
+
     steps:
       # Checkout the repository to the GitHub Actions runner
       - name: Checkout
@@ -36,6 +41,7 @@ jobs:
         uses: hashicorp/setup-terraform@v2
         with:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+          terraform_wrapper: false
 
       # Install Terraform linter
       - uses: terraform-linters/setup-tflint@v3
@@ -48,7 +54,7 @@ jobs:
         run: terraform init
 
       # Initialize Terraform linter
-      - name: Init TFLint
+      - name: TFLint Init
         run: tflint --init
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -69,8 +75,17 @@ jobs:
             -var 'environment=${{ github.event.inputs.aws_env }}' \
             -input=false -out=three-tier.tfplan
 
-        # On push to "master", build or change infrastructure according to Terraform configuration files
+        # Build or change infrastructure according to Terraform configuration files
         # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/"master"' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false three-tier.tfplan
+
+      # Register Terraform outputs that will be passed to Ansible job
+      - name: Register Terraform outputs
+        id: tf-output
+        run: |
+          echo "EXTERNAL_LB=$(terraform output external_lb_endpoint)" >> "$GITHUB_OUTPUT"
+          echo "INTERNAL_LB=$(terraform output internal_lb_endpoint)" >> "$GITHUB_OUTPUT"
+          gh secret set --env ${{ github.event.inputs.aws_env }} db_host < terraform output -raw db_host
+          gh secret set --env ${{ github.event.inputs.aws_env }} db_user < terraform output -raw db_user
+          gh secret set --env ${{ github.event.inputs.aws_env }} db_password < terraform output -raw db_password
