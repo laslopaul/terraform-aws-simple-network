@@ -95,6 +95,6 @@ jobs:
         run: |
           echo "EXTERNAL_LB=$(terraform output external_lb_endpoint)" >> "$GITHUB_OUTPUT"
           echo "INTERNAL_LB=$(terraform output internal_lb_endpoint)" >> "$GITHUB_OUTPUT"
-          gh secret set --env ${{ github.event.inputs.aws_env }} db_host < terraform output -raw db_host
-          gh secret set --env ${{ github.event.inputs.aws_env }} db_user < terraform output -raw db_user
-          gh secret set --env ${{ github.event.inputs.aws_env }} db_password < terraform output -raw db_password
+          gh secret set --env ${{ github.event.inputs.aws_env }} db_host --body "$(terraform output -raw db_host)"
+          gh secret set --env ${{ github.event.inputs.aws_env }} db_user --body "$(terraform output -raw db_user)"
+          gh secret set --env ${{ github.event.inputs.aws_env }} db_password --body "$(terraform output -raw db_password)"
