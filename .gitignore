@@ -33,3 +33,6 @@ override.tf.json
 
 # Ignore Ansible log files
 ansible/*.log
+
+# Ignore VSCode settings folder
+.vscode/*

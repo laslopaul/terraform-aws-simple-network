@@ -1,5 +1,0 @@
-{
-  "yaml.schemas": {
-    "https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/inventory.json": "file:///c%3A/Mentoring/terraform-aws-three-tier-arch/ansible/inventory/aws_ec2.yaml"
-  }
-}
