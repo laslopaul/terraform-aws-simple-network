@@ -91,7 +91,7 @@ jobs:
       - name: Register Terraform outputs
         id: tf-output
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.GH_RUNNER_TOKEN }}
         run: |
           echo "EXTERNAL_LB=$(terraform output external_lb_endpoint)" >> "$GITHUB_OUTPUT"
           echo "INTERNAL_LB=$(terraform output internal_lb_endpoint)" >> "$GITHUB_OUTPUT"
