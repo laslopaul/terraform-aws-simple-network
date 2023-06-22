@@ -83,6 +83,8 @@ jobs:
       # Register Terraform outputs that will be passed to Ansible job
       - name: Register Terraform outputs
         id: tf-output
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           echo "EXTERNAL_LB=$(terraform output external_lb_endpoint)" >> "$GITHUB_OUTPUT"
           echo "INTERNAL_LB=$(terraform output internal_lb_endpoint)" >> "$GITHUB_OUTPUT"
