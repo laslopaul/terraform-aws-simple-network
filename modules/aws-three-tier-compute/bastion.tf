@@ -2,33 +2,10 @@ resource "aws_instance" "bastion" {
   ami                         = data.aws_ami.ubuntu.id
   associate_public_ip_address = true
   instance_type               = var.bastion_instance_type
-  key_name                    = aws_key_pair.bastion_ssh_key.key_name
   user_data                   = file("${path.module}/bastion_provisioner.sh")
   subnet_id                   = var.subnets_web_tier[0]
   vpc_security_group_ids      = [var.sg_bastion]
   iam_instance_profile        = aws_iam_instance_profile.bastion_profile.name
-
-  connection {
-    type        = "ssh"
-    host        = self.public_ip
-    user        = "ssm-user"
-    private_key = file("${path.root}/.ssh/bastion")
-  }
-
-  provisioner "file" {
-    source      = "${path.root}/.ssh"
-    destination = "/home/ssm-user"
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-      "git clone --depth 1 --branch master --no-checkout https://github.com/laslopaul/terraform-aws-three-tier-arch.git",
-      "cd terraform-aws*",
-      "git sparse-checkout set ansible",
-      "git checkout master",
-      "chmod 600 ~/.ssh/bastion"
-    ]
-  }
 
   tags = {
     Name = "bastion"

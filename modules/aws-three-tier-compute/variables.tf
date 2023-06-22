@@ -3,11 +3,6 @@ variable "ubuntu_version" {
   type        = string
 }
 
-variable "ssh_public_key" {
-  description = "SSH public key for Bastion host login"
-  type        = string
-}
-
 variable "bastion_instance_type" {
   description = "Instance type for the Bastion host"
   type        = string

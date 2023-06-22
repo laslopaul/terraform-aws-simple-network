@@ -18,7 +18,6 @@ Instances created in ASGs have the following tags:
 ## Module inputs
 
 - `ubuntu_version` (string) - Ubuntu version that will be installed on all compute nodes (e.g. 22.04)
-- `ssh_public_key` (string) - SSH public key for Bastion host login
 - `bastion_instance_type` (string) - instance type for the Bastion host (e.g. `t3.micro`)
 - `sg_bastion` (string) - id of Bastion security group
 - `web_tier_instance_type` (string) - instance type for web-tier nodes (e.g. `t3.micro`)

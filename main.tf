@@ -52,7 +52,6 @@ module "aws-three-tier-db" {
 module "aws-three-tier-compute" {
   source                    = "./modules/aws-three-tier-compute"
   ubuntu_version            = "20.04"
-  ssh_public_key            = file("./.ssh/bastion.pub")
   bastion_instance_type     = "t3.micro"
   sg_bastion                = module.aws-three-tier-network.sg_bastion
   web_tier_instance_type    = "t3.micro"

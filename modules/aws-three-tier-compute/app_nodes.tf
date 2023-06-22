@@ -2,7 +2,6 @@ resource "aws_launch_template" "app_nodes" {
   name_prefix   = "app_node"
   instance_type = var.app_tier_instance_type
   image_id      = data.aws_ami.ubuntu.id
-  key_name      = aws_key_pair.bastion_ssh_key.key_name
 
   iam_instance_profile {
     name = data.aws_iam_instance_profile.ssm_managed_instance_profile.name
