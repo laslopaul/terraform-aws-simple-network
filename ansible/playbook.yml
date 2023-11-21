@@ -4,6 +4,9 @@
 
 - name: Install Nginx reverse proxy
   hosts: nodes_web
+  vars:
+    ansible_connection: aws_ssm
+    ansible_aws_ssm_region: "{{ aws_region }}"
   roles:
     - role: nginx
       target: rproxy
@@ -11,6 +14,9 @@
 
 - name: Install Nginx web server
   hosts: nodes_app
+  vars:
+    ansible_connection: aws_ssm
+    ansible_aws_ssm_region: "{{ aws_region }}"
   roles:
     - role: nginx
       target: lemp
@@ -18,6 +24,9 @@
 
 - name: Install Wordpress
   hosts: nodes_app
+  vars:
+    ansible_connection: aws_ssm
+    ansible_aws_ssm_region: "{{ aws_region }}"
   roles:
     - role: wordpress
       wp_host: "{{ external_lb_endpoint }}"
